@@ -1,0 +1,136 @@
+for setting animation and binding with code
+package com.myapplication;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+
+public class recyclerContact extends RecyclerView.Adapter<recyclerContact.viewholder> {
+    Context context;
+    ArrayList<contact>arr;
+    private int lastpos = - 1;
+    recyclerContact(Context context, ArrayList<contact>arr)
+    {
+        this.context = context;
+        this.arr = arr;
+
+    }
+    @NonNull
+    @Override
+    public viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+       View v =  LayoutInflater.from(context).inflate(R.layout.contact,parent,false);
+       viewholder viewholder = new viewholder(v);
+        return viewholder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull viewholder holder, int position) {
+        holder.img.setImageResource(arr.get(position).img);
+        holder.txt1.setText(arr.get(position).name);
+        holder.txt2.setText(arr.get(position).number);
+
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog =new Dialog(context);
+                dialog.setContentView(R.layout.add_layout);
+                EditText editText = dialog.findViewById(R.id.editTextText);
+                EditText editText1 = dialog.findViewById(R.id.editTextText2);
+                TextView textView = dialog.findViewById(R.id.textView);
+                textView.setText("Update Information");
+                Button btn = dialog.findViewById(R.id.button);
+                btn.setText("Update");
+                editText.setText(arr.get(position).name);
+                editText1.setText(arr.get(position).number);
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String name = "",ph = "";
+                        if(!editText.getText().toString().equals("") && !editText1.getText().toString().equals("")) {
+                            name = editText.getText().toString();
+                            ph = editText1.getText().toString();
+                        }
+                        else {
+                            Toast.makeText(context, "Please Enter Information", Toast.LENGTH_SHORT).show();
+                        }
+                        arr.set(position,new contact(name,ph));
+                        notifyItemChanged(position);
+                        dialog.dismiss();
+
+                    }
+                });
+                dialog.show();
+            }
+        });
+        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder builder= new AlertDialog.Builder(context)
+                        .setTitle("Delete")
+                        .setMessage("Are U Sure")
+                        .setIcon(R.drawable.ram)
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                arr.remove(position);
+                                notifyItemChanged(position);
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+
+                    builder.show();
+
+                return true;
+            }
+        });
+        setAnimation(holder.itemView,position);
+    }
+
+    @Override
+    public int getItemCount() {
+        return arr.size();
+    }
+
+    public class viewholder extends RecyclerView.ViewHolder{
+            TextView txt1, txt2;
+            ImageView img;
+        LinearLayout layout;
+            public viewholder(@NonNull View itemView) {
+                super(itemView);
+                txt1 = itemView.findViewById(R.id.txt1);
+                txt2 = itemView.findViewById(R.id.txt2);
+                img = itemView.findViewById(R.id.imageView);
+                layout = itemView.findViewById(R.id.ll1);
+            }
+        }
+        public  void setAnimation(View viewtoAnimate , int position)
+        {   if(position>lastpos) {
+            Animation slidein = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            viewtoAnimate.startAnimation(slidein);
+            lastpos=position;
+        }
+        }
+}
