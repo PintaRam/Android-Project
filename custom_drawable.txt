@@ -1,0 +1,93 @@
+Setting custom dialog
+Cust_dialog
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rel"
+    tools:context=".MainActivity">
+
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="74dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="232dp"
+            android:layout_marginEnd="-4dp"
+            android:layout_marginBottom="60dp"
+            android:background="#BC1616"
+            android:paddingTop="20dp"
+            android:text="Success"
+            android:textAlignment="center"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="408dp"
+            android:layout_height="68dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="307dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="113dp"
+            android:paddingTop="20dp"
+            android:text="You order has been placed"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginStart="-4dp"
+            android:layout_marginTop="98dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="224dp"
+            app:srcCompat="@android:drawable/checkbox_on_background" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="316dp"
+        android:layout_height="71dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="385dp"
+        android:layout_marginEnd="71dp"
+        android:text="Button" />
+
+
+</RelativeLayout>
+
+
+Java
+Dialog dialog = new Dialog(this);
+dialog.setContentView(R.layout.cust_dialog);
+@SuppressLint({"MissingInflatedId", "LocalSuppress"})
+View view = getLayoutInflater().inflate(R.layout.cust_dialog, (ViewGroup) findViewById(R.id.rel));
+dialog.setContentView(view);
+dialog.setCancelable(false);// should not close after clicking outside the dialog box
+Button btn = dialog.findViewById(R.id.button);
+btn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        dialog.dismiss();
+    }
+});
+dialog.show();
+
