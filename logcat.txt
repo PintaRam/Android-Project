@@ -1,0 +1,9 @@
+Logcat
+Pid -process id
+Tid  - thread id
+Date-time /pid -tid /package-name msg
+Lod.d(tag,msg)
+Log.e(tag,msg)
+Log.verbose(tag,msg) etc
+
+Alert Dialog Box
