@@ -1,0 +1,31 @@
+Notification Manager
+// fetch the drawable file 
+Drawable drawable = ResourcesCompat.getDrawable(getResources(),R.drawable.db,null);
+//convert drwable file into bitmap
+BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+//fetch the bitmap file
+Bitmap largeicon = bitmapDrawable.getBitmap();
+//handle the noticationmanager
+NotificationManager notificationManager  = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+Notification notification;
+if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+    notification = new Notification.Builder(this)
+            .setLargeIcon(largeicon)
+            .setSmallIcon(R.drawable.db)
+            .setContentText("New Message")
+            .setSubText("New Message  from Ram")
+            .setChannelId(channelId)
+            .build();
+    notificationManager.createNotificationChannel(new NotificationChannel(channelId,"New Channel",NotificationManager.IMPORTANCE_HIGH));
+}
+else {
+    notification = new Notification.Builder(this)
+            .setLargeIcon(largeicon)
+            .setSmallIcon(R.drawable.db)
+            .setContentText("New Message")
+            .setSubText("New Message  from Ram")
+
+            .build();
+}
+notificationManager.notify(Notifiaationid,notification);
+
