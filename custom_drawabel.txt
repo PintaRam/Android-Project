@@ -1,0 +1,63 @@
+Create a custom xml file  for custom toast
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/ra"
+    >
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="232dp"
+        android:layout_height="52dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="152dp"
+        android:layout_marginTop="248dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="430dp"
+        android:paddingTop="10sp"
+        android:text="TextView"
+        android:background="#B12D2D"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        tools:layout_editor_absoluteX="149dp"
+        tools:layout_editor_absoluteY="181dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="91dp"
+        android:layout_height="53dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginEnd="261dp"
+        android:layout_marginBottom="429dp"
+        app:srcCompat="@android:drawable/checkbox_on_background"
+        tools:layout_editor_absoluteX="58dp"
+        tools:layout_editor_absoluteY="180dp" />
+</RelativeLayout>
+
+
+Now creating a custom toast using viewgroup and inflate
+btn = findViewById(R.id.button);
+btn.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        Toast toast= new Toast(getApplicationContext());
+        View view = getLayoutInflater().inflate(R.layout.reaa ,(ViewGroup) findViewById(R.id.ra));
+//to convert any layout into view then we used inflate method and getlayoutInflater class 
+        toast.setView(view);
+        TextView textView = view.findViewById(R.id.textView);
+        textView.setText("Ram is sita");
+        toast.setDuration(toast.LENGTH_LONG);
+        toast.show();
+    }
+});
