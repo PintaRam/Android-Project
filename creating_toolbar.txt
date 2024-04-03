@@ -1,0 +1,50 @@
+for setting the toolbar
+<com.google.android.material.appbar.AppBarLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tool"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="-2dp"
+        android:layout_marginBottom="667dp"
+        android:background="#00BCD4" />
+</com.google.android.material.appbar.AppBarLayout>
+
+
+@Override
+public boolean onCreateOptionsMenu(Menu menu)
+{
+    new MenuInflater(this).inflate(R.menu.menu_add,menu);
+    return super.onCreateOptionsMenu(menu);
+}
+
+@Override
+public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    int itemid = item.getItemId();
+    if(itemid == R.id.opt_new)
+    {
+        Toast.makeText(this, "new folder", Toast.LENGTH_SHORT).show();
+    } else if (itemid == R.id.opt_open) {
+        Toast.makeText(this, "Open folder", Toast.LENGTH_SHORT).show();
+    } else if (itemid == R.id.opt_save) {
+        Toast.makeText(this, "Saves ", Toast.LENGTH_SHORT).show();
+    }
+    else if(itemid == android.R.id.home){
+            super.onBackPressed();
+    }
+    else {
+        Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+    }
+
+
+    return super.onOptionsItemSelected(item);
+}
+
