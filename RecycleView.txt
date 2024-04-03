@@ -1,0 +1,154 @@
+Recycle View
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/recycle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentBottom="true"
+    android:layout_marginTop="64dp"
+    android:layout_marginBottom="473dp" />
+
+
+For adding new contact
+<com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/floatingActionButton"
+    android:layout_width="111dp"
+    android:layout_height="85dp"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentBottom="true"
+    android:layout_marginStart="290dp"
+    android:layout_marginTop="613dp"
+    android:layout_marginEnd="9dp"
+    android:layout_marginBottom="32dp"
+    android:clickable="true"
+    android:scaleX="2"
+    android:scaleY="2"
+    android:tint="#673AB7"
+    app:srcCompat="@android:drawable/ic_menu_add" />
+
+
+
+public class MainActivity extends AppCompatActivity {
+RecyclerView recyclerView ;
+    recyclerContact adapter ;
+    Toolbar toolbar;
+FloatingActionButton flotg;
+    @SuppressLint("MissingInflatedId")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        recyclerView = findViewById(R.id.recycle);
+        flotg = findViewById(R.id.floatingActionButton);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ArrayList<contact> arr = new ArrayList<>();
+        flotg.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(MainActivity.this);
+                dialog.setContentView(R.layout.add_layout);
+                EditText editText = dialog.findViewById(R.id.editTextText);
+                EditText editText1 = dialog.findViewById(R.id.editTextText2);
+                Button btn = dialog.findViewById(R.id.button);
+
+                toolbar  = findViewById(R.id.tool);
+
+
+                setSupportActionBar(toolbar);
+                if(getSupportActionBar()!=null)
+                    getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+
+                toolbar.setTitle("Recycler View");
+                toolbar.setSubtitle("Ram");
+
+
+
+
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String name = "",ph = "";
+                        if(!editText.getText().toString().equals("") && !editText1.getText().toString().equals("")) {
+                            name = editText.getText().toString();
+                            ph = editText1.getText().toString();
+                        }
+                        else {
+                            Toast.makeText(MainActivity.this, "Please Enter Information", Toast.LENGTH_SHORT).show();
+                        }
+                        arr.add(new contact(R.drawable.ram11,name,ph));
+                        adapter.notifyItemInserted(arr.size() -1);
+                        recyclerView.scrollToPosition(arr.size()-1);
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+
+            }
+
+        });
+        contact model = new contact(R.drawable.ram,"Ram","9886165715");
+        contact model1 = new contact(R.drawable.ram1,"Ram","9886165715");
+        contact model2 = new contact(R.drawable.ram2,"Ram","9886165715");
+        contact model3 = new contact(R.drawable.ram3,"Ram","9886165715");
+        contact model4 = new contact(R.drawable.ram5,"Ram","9886165715");
+        contact model5 = new contact(R.drawable.ram6,"Ram","9886165715");
+        contact model6 = new contact(R.drawable.ram8,"Ram","9886165715");
+        contact model7 = new contact(R.drawable.ram10,"Ram","9886165715");
+        contact model8 = new contact(R.drawable.ram11,"Ram","9886165715");
+        contact model9 = new contact(R.drawable.ram13,"Ram","9886165715");
+        contact model11 = new contact(R.drawable.ram18,"Ram","9886165715");
+        contact model10 = new contact(R.drawable.ram19,"Ram","9886165715");
+        contact model21 = new contact(R.drawable.ram11,"sita","9886165715");
+
+        arr.add(model);
+        arr.add(model1);
+        arr.add(model2);
+        arr.add(model3);
+        arr.add(model4);
+        arr.add(model5);
+        arr.add(model6);
+        arr.add(model7);
+        arr.add(model8);
+        arr.add(model9);
+        arr.add(model10);
+        arr.add(model11);
+        arr.add(model21);
+        arr.add(new contact(R.drawable.ram19,"Ram","9886165715"));
+        arr.add(new contact(R.drawable.ram19,"Ram","9886165715"));
+        arr.add(new contact(R.drawable.ram19,"Ram","9886165715"));
+        arr.add(new contact(R.drawable.ram19,"Ram","9886165715"));
+        arr.add(new contact(R.drawable.ram19,"Ram","9886165715"));
+        arr.add(new contact(R.drawable.ram19,"Ram","9886165715"));
+        arr.add(new contact(R.drawable.ram19,"Ram","9886165715"));
+        arr.add(new contact(R.drawable.ram19,"Ram","9886165715"));
+        arr.add(new contact(R.drawable.ram19,"Ram","9886165715"));
+
+
+        adapter =new recyclerContact(this, arr);
+        recyclerView.setAdapter(adapter);
+
+    }
+cotact.java
+package com.myapplication;
+
+import android.os.ParcelUuid;
+
+public class contact {
+    int img;
+    String name , number;
+    public contact(int img , String name , String number)
+    {
+        this.name = name;
+        this.number = number;
+        this.img = img;
+    }
+    public  contact(String name,String ph)
+    {
+        this.name = name;
+        this.number = ph;
+    }
+}
+
