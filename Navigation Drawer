@@ -1,0 +1,202 @@
+Navigation Drawer
+Header 	navigation 
+ 
+
+
+Create a Three Fragment or five fragment using blank fragment
+Now create a content using resource file for creating a framelayout
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container"
+        />
+</LinearLayout>
+Create a xml file for toolbar
+And include the framelayout using content.xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="-2dp"
+            android:layout_marginBottom="667dp"
+            android:background="#00BCD4" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <include
+        layout="@layout/content_layout"
+
+        android:layout_width="match_parent"
+        android:layout_height="594dp"
+        android:layout_marginTop="70dp" />
+
+
+</RelativeLayout>
+Now create a header layout using xml creation for header of navigation drawer
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="#2196F3"
+    android:layout_height="176dp">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:id="@+id/img"
+        android:layout_height="66dp"
+        android:layout_gravity="center"
+        android:contentDescription="Header Image"
+        android:src="@drawable/baseline_cabin_24" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/textve"
+        android:textSize="20sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Database System"
+        />
+</LinearLayout>
+Now include the header and menu in activity.xml
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/drawablelayout"
+    android:layout_height="match_parent"
+    tools:openDrawer="start"
+    android:orientation="vertical">
+    <include layout="@layout/toolbarcustom"/>
+<com.google.android.material.navigation.NavigationView
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_gravity="start"
+    android:fitsSystemWindows="true"
+    android:id="@+id/navgationview"
+    app:headerLayout="@layout/headerlayouts" //header using header layout
+    app:menu="@menu/nav_bottom"/> //menu using menu layout
+
+
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
+Menu.xml in menu folder
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/home"
+        android:title="Home"
+        android:icon="@drawable/baseline_cabin_24"/>
+
+    <item android:id="@+id/contact"
+        android:title="Contact"
+        android:icon="@drawable/baseline_bluetooth_24"/>
+
+    <item android:id="@+id/bluehtoot"
+        android:title="Bluethooth"
+        android:icon="@drawable/baseline_broadcast_on_home_24"/>
+
+    <item android:id="@+id/cont"
+        android:title="My profile"
+        android:icon="@drawable/common_full_open_on_phone"/>
+
+    <item android:id="@+id/cabin"
+        android:title="Cabin"
+        android:icon="@drawable/baseline_cabin_24"/>
+</menu>
+ Mainactivity.java
+drawerLayout = findViewById(R.id.drawablelayout);
+    navigationView =findViewById(R.id.navgationview);
+    toolbar  = findViewById(R.id.tool);
+    //step 1 set up the toolbar
+    setSupportActionBar(toolbar);// to set the toolbar
+
+    ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.opneDrawer,R.string.closedDrawer);
+    drawerLayout.addDrawerListener(toggle);
+    toggle.syncState();
+    navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+            int id = item.getItemId();
+            if(id == R.id.bluehtoot)
+            {
+                fragmentload(new fragmentsexa(),1);
+            } else if (id == R.id.cabin) {
+                fragmentload(new Frammentsecond(),1);
+            } else if (id == R.id.contact) {
+                fragmentload(new EFragment(),1);
+            } else if (id == R.id.cont) {
+                fragmentload(new DFragment(),1);
+            }
+            else if(id == R.id.home) {
+                fragmentload(new BFragment(),1);
+            }
+            else {
+                fragmentload(new BFragment(),0);
+            }
+            //on click of any button close the drawer
+
+            drawerLayout.closeDrawer(GravityCompat.START);
+
+            return true;
+        }
+    });
+
+}
+
+@Override
+public void onBackPressed() {
+    //if drawer is opne then closed the drawer first on backpressed else close the activity
+
+    if(drawerLayout.isDrawerOpen(GravityCompat.START))
+    {
+        drawerLayout.closeDrawer(GravityCompat.START);
+    }
+    else
+    {
+        super.onBackPressed();
+    }
+}
+
+public void fragmentload(Fragment fragment, int flag)
+{
+    FragmentManager fragmentManager   = getSupportFragmentManager();
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    if(flag == 0)
+    {
+        fragmentTransaction.add(R.id.container,fragment);
+
+    }
+    else
+    {
+        fragmentTransaction.replace(R.id.container,fragment);
+    }
+    fragmentTransaction.commit();
